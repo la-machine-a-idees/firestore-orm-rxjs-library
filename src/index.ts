@@ -1,9 +1,11 @@
-import {  Firestore,   collection, } from 'firebase/firestore';
+import {  Firestore,   collection, getFirestore, } from 'firebase/firestore';
 export { initializeApp } from 'firebase/app';
 export { getFirestore } from 'firebase/firestore';
 
 import { Collection } from './collection';
 import { AnyEntity } from './entity';
+import { FirebaseOptions } from 'firebase/app';
+import { initializeApp } from 'firebase/app';
  
 export { Collection } from './collection';
 export { Entity, AnyEntity } from './entity';
@@ -16,8 +18,9 @@ let db: Firestore;
 const collections = new Map<string, Collection<AnyEntity>>();
 
 
-export const initializeOrm = (firestore: Firestore) => {
-  db = firestore
+export const initializeOrm = (firebaseConfig: FirebaseOptions) => {
+  const app = initializeApp(firebaseConfig);
+  db = getFirestore(app);
 };
 
 
