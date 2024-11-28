@@ -12,4 +12,6 @@ export class UserEntity extends Entity<z.infer<typeof schema>> {
   constructor() {
     super('users', schema, { username: 'No name' });
   }
+  
+  house = this.referencesToOne<HouseEntity>('houses').fromKey('house_id');
 }
