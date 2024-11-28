@@ -1,7 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { initTests, getAllCollections } from './initTests';
-import { UserEntity } from './UserEntity';
-import { CommentEntity } from './CommentEntity';
 
 describe('ReferenceToMultipleFromForeignKey', () => {
   beforeEach(() => {

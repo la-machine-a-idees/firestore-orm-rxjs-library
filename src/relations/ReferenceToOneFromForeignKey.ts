@@ -1,9 +1,6 @@
-import { Collection } from '../collection';
 import { getCollection } from '../index';
 import { AnyEntity } from '../entity';
-import { filter, map, Observable, of, ReplaySubject } from 'rxjs';
-import { limit, query, where } from 'firebase/firestore';
-
+import { query, where } from 'firebase/firestore';
 
 export class ReferenceToOneFromForeignKey<
   ForeignEntity extends AnyEntity,

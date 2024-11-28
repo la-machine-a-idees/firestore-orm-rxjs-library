@@ -1,7 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { initTests, getAllCollections } from './initTests';
-import { UserEntity } from './UserEntity';
-import { CarEntity } from './CarEntity';
 
 describe('ReferenceToOneFromForeignKey', () => {
   beforeEach(() => {

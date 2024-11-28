@@ -1,7 +1,5 @@
-import { Collection } from '../collection';
 import { getCollection } from '../index';
 import { AnyEntity } from '../entity';
-import { Observable, of } from 'rxjs';
 import { query, where } from 'firebase/firestore';
 
 export class ReferenceToMultipleFromForeignKey<
