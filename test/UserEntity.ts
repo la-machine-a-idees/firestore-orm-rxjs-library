@@ -1,6 +1,7 @@
 import { Entity, oneReference } from '../src';
 import { z } from 'zod';
 import { FamilyEntity } from './FamilyEntity';
+import { CarEntity } from './CarEntity';
 
 const schema = z.object({
   username: z.string(),
@@ -14,4 +15,6 @@ export class UserEntity extends Entity<z.infer<typeof schema>> {
   }
   
   family = this.referencesToOne<FamilyEntity>('families').fromKey('family_id');
+  
+  car = this.referencesToOne<CarEntity>('cars').fromForeignKey('user_owner_id');
 }
