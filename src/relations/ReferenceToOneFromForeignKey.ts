@@ -1,6 +1,6 @@
 import { getCollection } from '../index';
 import { AnyEntity } from '../entity';
-import { query, where } from 'firebase/firestore';
+import { limit, query, where } from 'firebase/firestore';
 
 export class ReferenceToOneFromForeignKey<
   ForeignEntity extends AnyEntity,
