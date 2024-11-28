@@ -66,8 +66,9 @@ describe('ReferenceToOneFromKey', () => {
     expect(firstFamily.data.city).toBe('Test City');
 
     // Update user to reference second family
-    userBeforeUpdate.data.family_id = family2Ref.id;
-    await userBeforeUpdate.save();
+    await updateDoc(doc(userCollection.firestoreCollectionReference, userRef.id), {
+      family_id: family2Ref.id
+    });
 
     // Verify update directly with Firestore
     const userDocRef = doc(userCollection.firestoreCollectionReference, userRef.id);

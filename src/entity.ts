@@ -9,23 +9,23 @@ import { ReferenceToOneFromForeignKey } from "./relations/ReferenceToOneFromFore
 export class Entity<
   // DocumentSchemaType must be Firestore's DocumentData
   DocumentSchemaType extends DocumentData
-  // and cannot be a Zod. It prevents to forget "z.infer"
-  //& DocumentSchemaType extends ZodType ? never : unknown
+// and cannot be a Zod. It prevents to forget "z.infer"
+//& DocumentSchemaType extends ZodType ? never : unknown
 > {
   data!: DocumentSchemaType;
-  
+
   private docRef?: DocumentReference;
 
-  private deleted = false; 
+  private deleted = false;
 
   constructor(
     public collectionName: string,
     documentZodSchema: SomeZodObject,
-    initialData: DocumentSchemaType 
+    initialData: DocumentSchemaType
   ) {
     this.setData(initialData);
   }
-  
+
   _setDocRef(docRef: DocumentReference) {
     this.docRef = docRef;
   }
@@ -34,29 +34,28 @@ export class Entity<
     // TODO validate newData
     this.data = newData;
   }
- 
+
 
   protected referencesToOne<
     ForeignEntity extends AnyEntity,
     ThisEntity extends AnyEntity = this
-    >(foreignCollectionName: string)
-  : {
-    fromKey: (
-      key: keyof ThisEntity['data']
-    ) => ReferenceToOneFromKey<ForeignEntity, ThisEntity>;
-    fromForeignKey: (
-      key: keyof ForeignEntity['data']
-    ) => ReferenceToOneFromForeignKey<ForeignEntity, ThisEntity>;
-    }
-  {
+  >(foreignCollectionName: string)
+    : {
+      fromKey: (
+        key: keyof ThisEntity['data']
+      ) => ReferenceToOneFromKey<ForeignEntity, ThisEntity>;
+      fromForeignKey: (
+        key: keyof ForeignEntity['data']
+      ) => ReferenceToOneFromForeignKey<ForeignEntity, ThisEntity>;
+    } {
     return {
-      fromKey: (key: keyof ThisEntity['data']) => 
+      fromKey: (key: keyof ThisEntity['data']) =>
         new ReferenceToOneFromKey<ForeignEntity, ThisEntity>(
           this as unknown as ThisEntity,
           key as string,
           foreignCollectionName
         ),
-      
+
       fromForeignKey: (foreignKey: keyof ForeignEntity['data']) => {
         return new ReferenceToOneFromForeignKey<ForeignEntity, ThisEntity>(
           this as unknown as ThisEntity,
@@ -71,21 +70,20 @@ export class Entity<
     if (!this.docRef) return undefined;
     return this.docRef.id;
   }
-  
+
   async save() {
     // TODO Zod validation
 
     if (!this.docRef) {
       const collection = getCollection(this.collectionName);
-      
+
       // This is an unstored entity, we need to add firestore document
       this.docRef = await addDoc(
         collection.firestoreCollectionReference,
         this.data
       )
-      
-      collection._addEntity(this);
-      
+
+
     } else {
       if (this.deleted) {
         throw new Error('Entity deleted');
@@ -109,10 +107,9 @@ export class Entity<
     this.data = undefined as any;
     this.deleted = true;
 
-    getCollection(this.collectionName)._removeEntity(this);
   }
-  
-  
+
+
   private unsubscribeSnapshot?: () => void;
 
   setRealtimeUpdates(enabled: boolean) {
@@ -124,7 +121,7 @@ export class Entity<
 
       if (this.unsubscribeSnapshot) {
         // Already subscribed
-        return; 
+        return;
       }
 
       this.unsubscribeSnapshot = onSnapshot(this.docRef, (doc) => {
@@ -140,7 +137,7 @@ export class Entity<
       }
     }
   }
-  
+
 }
 
 export type AnyEntity = Entity<DocumentData>;

@@ -19,8 +19,6 @@ import {
 } from 'firebase/firestore';
 
 export class Collection<ThisEntity extends AnyEntity> {
-  
-  private entitiesCache = new Map<string, ThisEntity>();
 
   constructor(
     public readonly firestoreCollectionReference: CollectionReference,
@@ -28,19 +26,17 @@ export class Collection<ThisEntity extends AnyEntity> {
     private entityType: new () => ThisEntity,
     private converter?: any // TODO
   ) { }
-  
-  
-  async create(data: ThisEntity['data']): Promise<ThisEntity> { 
+
+
+  async create(data: ThisEntity['data']): Promise<ThisEntity> {
     const entity = new this.entityType();
     entity.setData(data);
     await entity.save();
-    return entity;    
+    return entity;
   }
 
   async getById(id: string): Promise<ThisEntity> {
-    if (this.entitiesCache.has(id)) {
-      return this.entitiesCache.get(id)!;
-    }
+
 
     // TODO return quickly a promise and cache promises with a pool which auto remove ?
 
@@ -74,18 +70,12 @@ export class Collection<ThisEntity extends AnyEntity> {
       map((querySnapshot) => {
         const res = querySnapshot.docs.map((doc) => {
           // TODO idea: add change type for animation
-          const id = doc.id; 
 
-          let entity: ThisEntity;
-          if (this.entitiesCache.has(id)) {
-            entity = this.entitiesCache.get(id)!;
-          } else {
-            entity = this._createEntity(doc);
-          } 
+          const entity = this._createEntity(doc);
 
           return entity;
         });
- 
+
         return res;
       }),
 
@@ -99,10 +89,9 @@ export class Collection<ThisEntity extends AnyEntity> {
   }
 
   private _createEntity(doc: DocumentSnapshot) {
-    const entity = new this.entityType();    
+    const entity = new this.entityType();
     entity._setDocRef(doc.ref);
     entity.data = doc.data()!;
-    this.entitiesCache.set(doc.ref.id, entity);
     return entity;
   }
 
@@ -112,18 +101,4 @@ export class Collection<ThisEntity extends AnyEntity> {
     return firstValueFrom(this.observe$(queryFn));
   }
 
-  _addEntity(entity: ThisEntity) {
-    if (!entity.getId()) {
-      throw new Error('Entity has no id. Save it first.');
-    }
-
-    const entityId = entity.getId()!;
-    if (!this.entitiesCache.has(entityId)) {
-      this.entitiesCache.set(entityId, entity);
-    }
-  }
-
-  _removeEntity(entity: ThisEntity) {
-    this.entitiesCache.delete(entity.getId()!);
-  }
 }
