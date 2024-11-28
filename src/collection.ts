@@ -19,6 +19,7 @@ import {
 } from 'firebase/firestore';
 
 export class Collection<ThisEntity extends AnyEntity> {
+  
   private entitiesCache = new Map<string, ThisEntity>();
 
   constructor(
@@ -26,7 +27,15 @@ export class Collection<ThisEntity extends AnyEntity> {
     private collectionName: string,
     private entityType: new () => ThisEntity,
     private converter?: any // TODO
-  ) {}
+  ) { }
+  
+  
+  async create(data: ThisEntity['data']): Promise<ThisEntity> { 
+    const entity = new this.entityType();
+    entity.setData(data);
+    await entity.save();
+    return entity;    
+  }
 
   async getById(id: string): Promise<ThisEntity> {
     if (this.entitiesCache.has(id)) {
