@@ -2,6 +2,7 @@ import { getCollection, initializeOrm, registerCollection } from "../src/index";
 import { UserEntity } from "./UserEntity";
 import { FamilyEntity } from "./FamilyEntity";
 import { CarEntity } from "./CarEntity";
+import { CommentEntity } from "./CommentEntity";
 
 let initialized = false;
 
@@ -25,6 +26,7 @@ export function initTests() {
   registerCollection('users', 'users', UserEntity);
   registerCollection('families', 'families', FamilyEntity);
   registerCollection('cars', 'cars', CarEntity);
+  registerCollection('comments', 'comments', CommentEntity);
 }
 
 export function getAllCollections() {
@@ -32,5 +34,6 @@ export function getAllCollections() {
     userCollection: getCollection<UserEntity>('users'),
     familyCollection: getCollection<FamilyEntity>('families'),
     carCollection: getCollection<CarEntity>('cars'),
+    commentCollection: getCollection<CommentEntity>('comments'),
   }
 }

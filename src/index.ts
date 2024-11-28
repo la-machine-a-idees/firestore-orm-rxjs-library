@@ -11,6 +11,7 @@ export { Collection } from './collection';
 export { Entity, AnyEntity } from './entity';
 export { ReferenceToOneFromKey } from './relations/ReferenceToOneFromKey';
 export { oneReference, multipleReferences } from './schemaHelpers';
+export { ReferenceToMultipleFromForeignKey } from './relations/ReferenceToMultipleFromForeignKey';
 
 
 
@@ -56,5 +57,3 @@ export const getCollection = <ThisEntity extends AnyEntity = AnyEntity>(collecti
   
   return collections.get(collectionName) as Collection<ThisEntity>;
 };
-
-

@@ -5,6 +5,7 @@ import { ReferenceToOneFromKey } from "./relations/ReferenceToOneFromKey";
 import { getCollection } from './index';
 import { SomeZodObject } from "zod";
 import { ReferenceToOneFromForeignKey } from "./relations/ReferenceToOneFromForeignKey";
+import { ReferenceToMultipleFromForeignKey } from "./relations/ReferenceToMultipleFromForeignKey";
 
 export class Entity<
   // DocumentSchemaType must be Firestore's DocumentData
@@ -58,6 +59,26 @@ export class Entity<
 
       fromForeignKey: (foreignKey: keyof ForeignEntity['data']) => {
         return new ReferenceToOneFromForeignKey<ForeignEntity, ThisEntity>(
+          this as unknown as ThisEntity,
+          foreignKey as string,
+          foreignCollectionName
+        )
+      }
+    }
+  }
+
+  protected referencesToMultiple<
+    ForeignEntity extends AnyEntity,
+    ThisEntity extends AnyEntity = this
+  >(foreignCollectionName: string)
+    : {
+      fromForeignKey: (
+        key: keyof ForeignEntity['data']
+      ) => ReferenceToMultipleFromForeignKey<ForeignEntity, ThisEntity>;
+    } {
+    return {
+      fromForeignKey: (foreignKey: keyof ForeignEntity['data']) => {
+        return new ReferenceToMultipleFromForeignKey<ForeignEntity, ThisEntity>(
           this as unknown as ThisEntity,
           foreignKey as string,
           foreignCollectionName
