@@ -1,10 +1,10 @@
 import { Entity, oneReference } from '../src';
 import { z } from 'zod';
-import { HouseEntity } from './HouseEntity';
+import { FamilyEntity } from './FamilyEntity';
 
 const schema = z.object({
   username: z.string(),
-  house_id: oneReference,
+  family_id: oneReference,
 });
 
 export class UserEntity extends Entity<z.infer<typeof schema>> {
@@ -13,5 +13,5 @@ export class UserEntity extends Entity<z.infer<typeof schema>> {
     super('users', schema, { username: 'No name' });
   }
   
-  house = this.referencesToOne<HouseEntity>('houses').fromKey('house_id');
+  family = this.referencesToOne<FamilyEntity>('families').fromKey('family_id');
 }

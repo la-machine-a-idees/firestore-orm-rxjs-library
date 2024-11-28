@@ -1,6 +1,6 @@
 import { getCollection, initializeOrm, registerCollection } from "../src/index";
 import { UserEntity } from "./UserEntity";
-import { HouseEntity } from "./HouseEntity";
+import { FamilyEntity } from "./FamilyEntity";
 
 let initialized = false;
 
@@ -22,12 +22,12 @@ export function initTests() {
   initializeOrm(firebaseConfig);
   
   registerCollection('users', 'users', UserEntity);
-  registerCollection('houses', 'houses', HouseEntity);
+  registerCollection('families', 'families', FamilyEntity);
 }
 
 export function getAllCollections() {
   return {
     userCollection: getCollection<UserEntity>('users'),
-    houseCollection: getCollection<HouseEntity>('houses'),
+    familyCollection: getCollection<FamilyEntity>('families'),
   }
 }

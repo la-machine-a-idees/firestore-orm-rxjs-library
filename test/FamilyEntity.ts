@@ -6,8 +6,8 @@ const schema = z.object({
   city: z.string(),
 });
 
-export class HouseEntity extends Entity<z.infer<typeof schema>> {
+export class FamilyEntity extends Entity<z.infer<typeof schema>> {
   constructor() {
-    super('houses', schema, { address: '', city: '' });
+    super('families', schema, { address: '', city: '' });
   }
-} 
+}

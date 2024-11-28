@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { initTests, getAllCollections } from './initTests';
 import { UserEntity } from './UserEntity';
-import { HouseEntity } from './HouseEntity';
+import { FamilyEntity } from './FamilyEntity';
 import { addDoc, updateDoc, doc, getDoc } from 'firebase/firestore';
 
 describe('ReferenceToOneFromKey', () => {
@@ -9,79 +9,79 @@ describe('ReferenceToOneFromKey', () => {
     initTests();
   });
 
-  it('should create house, user with house_id and retrieve house through reference', async () => {
-    const { userCollection, houseCollection } = getAllCollections();
+  it('should create family, user with family_id and retrieve family through reference', async () => {
+    const { userCollection, familyCollection } = getAllCollections();
 
-    // Create a house using Firestore API
-    const houseRef = await addDoc(houseCollection.firestoreCollectionReference, {
+    // Create a family using Firestore API
+    const familyRef = await addDoc(familyCollection.firestoreCollectionReference, {
       address: '123 Test Street',
       city: 'Test City'
     });
 
-    // Create a user with reference to house using Firestore API
+    // Create a user with reference to family using Firestore API
     const userRef = await addDoc(userCollection.firestoreCollectionReference, {
       username: 'testUser',
-      house_id: houseRef.id
+      family_id: familyRef.id
     });
 
-    // Get user with house reference
+    // Get user with family reference
     const retrievedUser = await userCollection.getById(userRef.id);
     expect(retrievedUser).toBeDefined();
     expect(retrievedUser.data.username).toBe('testUser');
-    expect(retrievedUser.data.house_id).toBe(houseRef.id);
+    expect(retrievedUser.data.family_id).toBe(familyRef.id);
 
-    // Get referenced house through user
-    const referencedHouse = await retrievedUser.house.getEntity();
-    expect(referencedHouse).toBeDefined();
-    expect(referencedHouse.data.address).toBe('123 Test Street');
-    expect(referencedHouse.data.city).toBe('Test City');
+    // Get referenced family through user
+    const referencedFamily = await retrievedUser.family.getEntity();
+    expect(referencedFamily).toBeDefined();
+    expect(referencedFamily.data.address).toBe('123 Test Street');
+    expect(referencedFamily.data.city).toBe('Test City');
   });
 
-  it('should update house reference and retrieve new house', async () => {
-    const { userCollection, houseCollection } = getAllCollections();
+  it('should update family reference and retrieve new family', async () => {
+    const { userCollection, familyCollection } = getAllCollections();
 
-    // Create first house using Firestore API
-    const house1Ref = await addDoc(houseCollection.firestoreCollectionReference, {
+    // Create first family using Firestore API
+    const family1Ref = await addDoc(familyCollection.firestoreCollectionReference, {
       address: '123 Test Street',
       city: 'Test City'
     });
 
-    // Create a user with reference to first house using Firestore API
+    // Create a user with reference to first family using Firestore API
     const userRef = await addDoc(userCollection.firestoreCollectionReference, {
       username: 'testUser',
-      house_id: house1Ref.id
+      family_id: family1Ref.id
     });
 
-    // Create second house using Firestore API
-    const house2Ref = await addDoc(houseCollection.firestoreCollectionReference, {
+    // Create second family using Firestore API
+    const family2Ref = await addDoc(familyCollection.firestoreCollectionReference, {
       address: '456 New Street',
       city: 'New City'
     });
 
-    // Verify user references first house
+    // Verify user references first family
     const userBeforeUpdate = await userCollection.getById(userRef.id);
-    expect(userBeforeUpdate.data.house_id).toBe(house1Ref.id);
-    const firstHouse = await userBeforeUpdate.house.getEntity();
-    expect(firstHouse.data.address).toBe('123 Test Street');
-    expect(firstHouse.data.city).toBe('Test City');
+    expect(userBeforeUpdate.data.family_id).toBe(family1Ref.id);
+    const firstFamily = await userBeforeUpdate.family.getEntity();
+    expect(firstFamily.data.address).toBe('123 Test Street');
+    expect(firstFamily.data.city).toBe('Test City');
 
-    // Update user to reference second house
-    userBeforeUpdate.data.house_id = house2Ref.id;
+    // Update user to reference second family
+    userBeforeUpdate.data.family_id = family2Ref.id;
     await userBeforeUpdate.save();
 
     // Verify update directly with Firestore
     const userDocRef = doc(userCollection.firestoreCollectionReference, userRef.id);
     const updatedDoc = await getDoc(userDocRef);
-    expect(updatedDoc.data()?.house_id).toBe(house2Ref.id);
+    expect(updatedDoc.data()?.family_id).toBe(family2Ref.id);
 
-    // Get user and verify it references the second house
+    // Get user and verify it references the second family
     const retrievedUser = await userCollection.getById(userRef.id);
-    expect(retrievedUser.data.house_id).toBe(house2Ref.id);
+    expect(retrievedUser.data.family_id).toBe(family2Ref.id);
 
-    // Get referenced house through user and verify it's the second house
-    const referencedHouse = await retrievedUser.house.getEntity();
-    expect(referencedHouse).toBeDefined();
-    expect(referencedHouse.data.address).toBe('456 New Street');
-    expect(referencedHouse.data.city).toBe('New City');
+    // Get referenced family through user and verify it's the second family
+    const referencedFamily = await retrievedUser.family.getEntity();
+    expect(referencedFamily).toBeDefined();
+    expect(referencedFamily.data.address).toBe('456 New Street');
+    expect(referencedFamily.data.city).toBe('New City');
   });
 });
