@@ -75,7 +75,6 @@ describe('Query operations', () => {
     const subscription = familyCollection.observe$(ref =>
       query(ref, where('city', '==', cityName), orderBy('address'))
     ).subscribe(families => {
-      console.log('families', families);
       familiesReceived.push(families);
     });
 
