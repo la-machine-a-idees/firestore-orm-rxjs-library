@@ -11,7 +11,8 @@ describe('ReferenceToMultipleFromForeignKey', () => {
 
     // Create a user
     const user = await userCollection.create({
-      username: 'John Doe'
+      username: 'John Doe',
+      group_ids: []
     });
 
     // Create multiple comments

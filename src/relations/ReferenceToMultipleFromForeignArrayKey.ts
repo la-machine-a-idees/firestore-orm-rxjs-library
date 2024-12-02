@@ -1,8 +1,8 @@
 import { getCollection } from '../index';
 import { AnyEntity } from '../entity';
-import { query, where } from 'firebase/firestore';
+import { query, where, FieldPath } from 'firebase/firestore';
 
-export class ReferenceToMultipleFromForeignKey<
+export class ReferenceToMultipleFromForeignArrayKey<
   ForeignEntity extends AnyEntity,
   ThisEntity extends AnyEntity
 > {
@@ -10,7 +10,7 @@ export class ReferenceToMultipleFromForeignKey<
 
   constructor(
     private thisEntity: ThisEntity,
-    private foreignKey: keyof ForeignEntity['data'],
+    private foreignArrayKey: keyof ForeignEntity['data'],
     private foreignCollectionName: string
   ) { }
 
@@ -24,7 +24,7 @@ export class ReferenceToMultipleFromForeignKey<
       const collection = getCollection<ForeignEntity>(this.foreignCollectionName)
       this.foreignEntities = await collection.get(ref => query(
         ref,
-        where(this.foreignKey as string, '==', this.thisEntity.getId())
+        where(this.foreignArrayKey as string, 'array-contains', this.thisEntity.getId())
       ));
     }
 

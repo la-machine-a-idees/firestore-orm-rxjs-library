@@ -3,6 +3,7 @@ import { UserEntity } from "./UserEntity";
 import { FamilyEntity } from "./FamilyEntity";
 import { CarEntity } from "./CarEntity";
 import { CommentEntity } from "./CommentEntity";
+import { GroupEntity } from "./GroupEntity";
 
 let initialized = false;
 
@@ -27,6 +28,7 @@ export function initTests() {
   registerCollection('families', 'families', FamilyEntity);
   registerCollection('cars', 'cars', CarEntity);
   registerCollection('comments', 'comments', CommentEntity);
+  registerCollection('groups', 'groups', GroupEntity);
 }
 
 export function getAllCollections() {
@@ -35,5 +37,6 @@ export function getAllCollections() {
     familyCollection: getCollection<FamilyEntity>('families'),
     carCollection: getCollection<CarEntity>('cars'),
     commentCollection: getCollection<CommentEntity>('comments'),
+    groupCollection: getCollection<GroupEntity>('groups'),
   }
 }

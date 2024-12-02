@@ -10,7 +10,7 @@ export class ReferenceToOneFromForeignKey<
 
   constructor(
     private thisEntity: ThisEntity,
-    private foreignKey: string,
+    private foreignKey: keyof ForeignEntity['data'],
     private foreignCollectionName: string
   ) { }
 
@@ -24,7 +24,7 @@ export class ReferenceToOneFromForeignKey<
       const collection = getCollection<ForeignEntity>(this.foreignCollectionName)
       const results = await collection.get(ref => query(
         ref,
-        where(this.foreignKey, '==', this.thisEntity.getId()),
+        where(this.foreignKey as string, '==', this.thisEntity.getId()),
         limit(1)
       ));
       this.foreignEntity = results[0];

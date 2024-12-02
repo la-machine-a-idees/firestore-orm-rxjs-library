@@ -12,6 +12,7 @@ describe('ReferenceToOneFromForeignKey', () => {
     // Create a user
     const user = await userCollection.create({
       username: 'John Doe',
+      group_ids: []
     });
 
     // Create a car
