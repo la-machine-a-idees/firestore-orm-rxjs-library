@@ -12,7 +12,7 @@ export class ReferenceToOneFromForeignKey<
     private foreignCollectionName: string
   ) { }
 
-  async getEntity(): Promise<ForeignEntity | undefined> {
+  async getEntity(): Promise<ForeignEntity> {
     if (!this.thisEntity.getId()) {
       throw new Error('Source entity has no ID');
     }

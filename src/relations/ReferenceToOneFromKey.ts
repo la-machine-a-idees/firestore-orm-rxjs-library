@@ -13,12 +13,8 @@ export class ReferenceToOneFromKey<
     private foreignCollectionName: string
   ) { }
 
-  async getEntity(): Promise<ForeignEntity | undefined> {
+  async getEntity(): Promise<ForeignEntity> {
     const currentValue = this.thisEntity.data[this.key as string];
-    if (!currentValue) {
-      return undefined;
-    }
-
     const collection = getCollection<ForeignEntity>(this.foreignCollectionName);
     return collection.getById(currentValue);
   }

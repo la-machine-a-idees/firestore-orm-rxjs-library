@@ -18,7 +18,7 @@ describe('ReferenceToOneFromForeignKey', () => {
     // Create a car
     const car = await carCollection.create({
       model: 'Tesla Model 3',
-      user_owner_id: user.getId()!
+      user_owner_id: user.getId()
     });
 
     // Get the car through user's reference

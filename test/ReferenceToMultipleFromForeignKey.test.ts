@@ -35,6 +35,6 @@ describe('ReferenceToMultipleFromForeignKey', () => {
     expect(userComments).toBeDefined();
     expect(userComments.length).toBe(2);
     expect(userComments.map(c => c.data.text).sort()).toEqual(['First comment', 'Second comment'].sort());
-    expect(userComments.map(c => c.getId()!).sort()).toEqual([comment1.getId()!, comment2.getId()!].sort());
+    expect(userComments.map(c => c.getId()).sort()).toEqual([comment1.getId(), comment2.getId()].sort());
   });
 });

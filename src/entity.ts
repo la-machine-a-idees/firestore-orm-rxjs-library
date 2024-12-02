@@ -90,9 +90,13 @@ export class Entity<
       }
     }
   }
+  
+  hasId() {
+    return !!this.docRef;
+  }
 
   getId() {
-    if (!this.docRef) return undefined;
+    if (!this.docRef) throw new Error('Entity not saved');
     return this.docRef.id;
   }
 
@@ -162,6 +166,21 @@ export class Entity<
       }
     }
   }
+  
+  /*
+  createClone<EntityType extends OrmEntity<DataType>>(): EntityType {
+    console.assert(this.__docRef && !this.isDeleted);
+    const clone = new this.__collectionConfig.entityType();
+    clone.__setAll(
+      this.__id,
+      this.__manager,
+      this.__docRef,
+      cloneDeep(this.data),
+      this.__collectionConfig
+    );
+    return clone as EntityType;
+  }
+  */
 
 }
 
