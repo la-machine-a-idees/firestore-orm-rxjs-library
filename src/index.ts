@@ -25,13 +25,19 @@ export const initializeOrm = (firebaseConfig: FirebaseOptions) => {
 };
 
 
+export const hasCollection = (collectionName: string): boolean => {
+  return collections.has(collectionName);
+};
+
+
+
 export const registerCollection = <ThisEntity extends AnyEntity>(
   collectionName: string,
   firestoreRootCollectionName: string,
   entityType: new () => ThisEntity,
   converter?: any // TODO
 ) => {
-  if (collections.has(collectionName)) {
+  if (hasCollection(collectionName)) {
     throw new Error(`Collection '${collectionName}' already registered.`);
   } 
   
@@ -51,7 +57,7 @@ export const registerCollection = <ThisEntity extends AnyEntity>(
 
 
 export const getCollection = <ThisEntity extends AnyEntity = AnyEntity>(collectionName: string) => {
-  if (!collections.has(collectionName)) {
+  if (!hasCollection(collectionName)) {
     throw new Error(`Collection '${collectionName}' was not registered.`);
   }
   
