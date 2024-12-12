@@ -132,9 +132,12 @@ export class Entity<
     if (this.deleted) {
       throw new Error('Entity deleted');
     }
+    
+    this.setRealtimeUpdates(false)
 
     if (this.docRef) {
       await deleteDoc(this.docRef);
+      this.docRef = undefined;
     }
 
     // Object.keys(this.relations).forEach(key => { this.relations[key].entityWasDeleted(); });
