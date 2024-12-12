@@ -140,10 +140,8 @@ export class Entity<
       this.docRef = undefined;
     }
 
-    // Object.keys(this.relations).forEach(key => { this.relations[key].entityWasDeleted(); });
     this.data = undefined as any;
     this.deleted = true;
-
   }
 
 
