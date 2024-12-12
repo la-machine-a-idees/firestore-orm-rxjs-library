@@ -22,9 +22,7 @@ export class Collection<ThisEntity extends AnyEntity> {
 
   constructor(
     public readonly firestoreCollectionReference: CollectionReference,
-    private collectionName: string,
     private entityType: new () => ThisEntity,
-    private converter?: any // TODO
   ) { }
 
 
