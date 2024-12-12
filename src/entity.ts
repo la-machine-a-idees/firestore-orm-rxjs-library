@@ -151,9 +151,8 @@ export class Entity<
 
   setRealtimeUpdates(enabled: boolean) {
     if (enabled) {
-      if (!this.docRef) {
-        console.warn('Cannot enable realtime updates on unsaved entity');
-        return;
+      if (!this.docRef || this.deleted) {
+        throw new Error('Cannot enable realtime updates on unsaved or deleted entity');
       }
 
       if (this.unsubscribeSnapshot) {
