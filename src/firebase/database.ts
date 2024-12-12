@@ -1,1 +1,1 @@
-export * from 'firebase/database'; 
+export * from 'firebase/database'

@@ -1,1 +1,1 @@
-export * from 'firebase/functions'; 
+export * from 'firebase/functions'

@@ -1,1 +1,1 @@
-export * from 'firebase/analytics'; 
+export * from 'firebase/analytics'

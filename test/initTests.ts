@@ -1,18 +1,18 @@
-import { getCollection, initializeOrm, registerCollection } from "../src/index";
-import { UserEntity } from "./UserEntity";
-import { FamilyEntity } from "./FamilyEntity";
-import { CarEntity } from "./CarEntity";
-import { CommentEntity } from "./CommentEntity";
-import { GroupEntity } from "./GroupEntity";
+import { getCollection, initializeOrm, registerCollection } from '../src/index'
+import { UserEntity } from './UserEntity'
+import { FamilyEntity } from './FamilyEntity'
+import { CarEntity } from './CarEntity'
+import { CommentEntity } from './CommentEntity'
+import { GroupEntity } from './GroupEntity'
 
-let initialized = false;
+let initialized = false
 
 export function initTests() {
   if (initialized) {
-    return;
+    return
   }
-  initialized = true;
-  
+  initialized = true
+
   const firebaseConfig = {
     apiKey: 'AIzaSyDn8MsKvdearie6PBSDOpYLINPmNyxqO4k',
     authDomain: 'test-orm-package.firebaseapp.com',
@@ -20,15 +20,15 @@ export function initTests() {
     storageBucket: 'test-orm-package.appspot.com',
     messagingSenderId: '547261186342',
     appId: '1:547261186342:web:350fb5012468c0ab6041e7',
-  };
- 
-  initializeOrm(firebaseConfig);
-  
-  registerCollection('users', UserEntity);
-  registerCollection('families', FamilyEntity);
-  registerCollection('cars', CarEntity);
-  registerCollection('comments', CommentEntity);
-  registerCollection('groups', GroupEntity);
+  }
+
+  initializeOrm(firebaseConfig)
+
+  registerCollection('users', UserEntity)
+  registerCollection('families', FamilyEntity)
+  registerCollection('cars', CarEntity)
+  registerCollection('comments', CommentEntity)
+  registerCollection('groups', GroupEntity)
 }
 
 export function getAllCollections() {

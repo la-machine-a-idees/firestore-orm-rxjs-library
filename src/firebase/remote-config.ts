@@ -1,1 +1,1 @@
-export * from 'firebase/remote-config'; 
+export * from 'firebase/remote-config'

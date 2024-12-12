@@ -1,1 +1,1 @@
-export * from 'firebase/performance'; 
+export * from 'firebase/performance'

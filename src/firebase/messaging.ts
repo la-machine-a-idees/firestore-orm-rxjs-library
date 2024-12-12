@@ -1,1 +1,1 @@
-export * from 'firebase/messaging'; 
+export * from 'firebase/messaging'
