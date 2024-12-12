@@ -1,4 +1,4 @@
-import { Entity, oneReference } from '../src';
+import { Entity, multipleReferences, oneReference } from '../src';
 import { z } from 'zod';
 import { FamilyEntity } from './FamilyEntity';
 import { CarEntity } from './CarEntity';
@@ -7,7 +7,7 @@ import { CommentEntity } from './CommentEntity';
 const schema = z.object({
   username: z.string(),
   family_id: oneReference,
-  group_ids: z.array(z.string()),
+  group_ids: multipleReferences,
 });
 
 export class UserEntity extends Entity<z.infer<typeof schema>> {
