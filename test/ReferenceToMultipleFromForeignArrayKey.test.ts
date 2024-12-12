@@ -56,7 +56,7 @@ describe('ReferenceToMultipleFromForeignArrayKey', () => {
     expect(emptyGroupUsers.length).toBe(0);
 
     // Add user to group
-    user.data.group_ids.push(group.getId());
+    user.data.group_ids?.push(group.getId());
     await user.save();
 
     // Verify group now has one user
