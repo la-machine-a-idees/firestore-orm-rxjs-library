@@ -32,8 +32,7 @@ export const hasCollection = (collectionName: string): boolean => {
 
 
 export const registerCollection = <ThisEntity extends AnyEntity>(
-  collectionName: string,
-  firestoreRootCollectionName: string,
+  collectionName: string, 
   entityType: new () => ThisEntity,
   converter?: any // TODO
 ) => {
@@ -44,7 +43,7 @@ export const registerCollection = <ThisEntity extends AnyEntity>(
   const newCollection = new Collection<ThisEntity>(
     collection(
       db,
-      firestoreRootCollectionName
+      collectionName
     ),
     collectionName,
     entityType,

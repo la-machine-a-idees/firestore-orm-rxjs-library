@@ -24,11 +24,11 @@ export function initTests() {
  
   initializeOrm(firebaseConfig);
   
-  registerCollection('users', 'users', UserEntity);
-  registerCollection('families', 'families', FamilyEntity);
-  registerCollection('cars', 'cars', CarEntity);
-  registerCollection('comments', 'comments', CommentEntity);
-  registerCollection('groups', 'groups', GroupEntity);
+  registerCollection('users', UserEntity);
+  registerCollection('families', FamilyEntity);
+  registerCollection('cars', CarEntity);
+  registerCollection('comments', CommentEntity);
+  registerCollection('groups', GroupEntity);
 }
 
 export function getAllCollections() {
