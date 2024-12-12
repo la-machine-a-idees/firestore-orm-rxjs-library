@@ -34,6 +34,7 @@ export const hasCollection = (collectionName: string): boolean => {
 export const registerCollection = <ThisEntity extends AnyEntity>(
   collectionName: string, 
   entityType: new () => ThisEntity,
+  // converter?: any // TODO to implement usage
 ) => {
   if (hasCollection(collectionName)) {
     throw new Error(`Collection '${collectionName}' already registered.`);

@@ -172,7 +172,7 @@ export class Entity<
     }
   }
   
-  /*
+  /* TODO
   createClone<EntityType extends OrmEntity<DataType>>(): EntityType {
     console.assert(this.__docRef && !this.isDeleted);
     const clone = new this.__collectionConfig.entityType();

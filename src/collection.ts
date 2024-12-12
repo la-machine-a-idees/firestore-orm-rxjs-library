@@ -25,7 +25,8 @@ export class Collection<ThisEntity extends AnyEntity> {
     private entityType: new () => ThisEntity,
   ) { }
 
-
+  
+  // TODO add param to not save at creation ?
   async create(data: ThisEntity['data']): Promise<ThisEntity> {
     const entity = new this.entityType();
     entity.setData(data);
