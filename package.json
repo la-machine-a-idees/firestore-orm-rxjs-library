@@ -2,6 +2,12 @@
   "name": "@la.machine.a.idees/firestore-orm-rxjs",
   "description": "ORM library for Google Firestore for rxjs (Angular) users",
   "author": "La Machine à Idées <la-machine-a-idees@users.noreply.github.com> (https://github.com/la-machine-a-idees)",
+  "keywords": [
+    "orm",
+    "firestore",
+    "firebase",
+    "rxjs"
+  ],
   "version": "1.0.0",
   "license": "MIT",
   "repository": {
