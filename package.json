@@ -29,7 +29,7 @@
     "build:watch": "tsup --watch",
     "test": "vitest run",
     "test:watch": "vitest",
-    "lint": "eslint .",
+    "lint": "eslint . && npm run pretty",
     "prepare": "tsup",
     "size": "size-limit",
     "analyze": "size-limit --why",
@@ -37,7 +37,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "eslint ."
+      "pre-commit": "eslint . && npm run pretty"
     }
   },
   "prettier": {
