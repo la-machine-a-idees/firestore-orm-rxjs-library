@@ -32,7 +32,8 @@
     "lint": "eslint .",
     "prepare": "tsup",
     "size": "size-limit",
-    "analyze": "size-limit --why"
+    "analyze": "size-limit --why",
+    "pretty": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\""
   },
   "husky": {
     "hooks": {
@@ -60,6 +61,7 @@
     "@size-limit/preset-small-lib": "^11.1.6",
     "eslint": "^9.15.0",
     "husky": "^9.1.7",
+    "prettier": "^3.4.2",
     "size-limit": "^11.1.6",
     "tsup": "^8.3.5",
     "typescript": "^5.7.2",
