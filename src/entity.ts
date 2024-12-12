@@ -22,7 +22,7 @@ export class Entity<
 
   constructor(
     public collectionName: string,
-    documentZodSchema: SomeZodObject,
+    private documentZodSchema: SomeZodObject,
     initialData: DocumentSchemaType
   ) {
     this.setData(initialData);
@@ -33,7 +33,10 @@ export class Entity<
   }
 
   setData(newData: DocumentSchemaType) {
-    // TODO validate newData
+    const validationResult = this.documentZodSchema.safeParse(newData);
+    if (!validationResult.success) {
+      throw new Error(`Data validation failed: ${validationResult.error.message}`);
+    }
     this.data = newData;
   }
 
@@ -101,7 +104,14 @@ export class Entity<
   }
 
   async save() {
-    // TODO Zod validation
+    if (this.deleted) {
+      throw new Error('Entity deleted');
+    }
+    
+    const validationResult = this.documentZodSchema.safeParse(this.data);
+    if (!validationResult.success) {
+      throw new Error(`Data validation failed: ${validationResult.error.message}`);
+    }
 
     if (!this.docRef) {
       const collection = getCollection(this.collectionName);
@@ -111,12 +121,7 @@ export class Entity<
         collection.firestoreCollectionReference,
         this.data
       )
-
-
     } else {
-      if (this.deleted) {
-        throw new Error('Entity deleted');
-      }
       await setDoc(this.docRef, this.data);
     }
   }
