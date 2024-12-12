@@ -25,10 +25,16 @@ npm install @la.machine.a.idees/firestore-orm-rxjs
 1. Initialize Firebase in your application:
 
 ```typescript
-import { initializeApp } from '@la.machine.a.idees/firestore-orm-rxjs';
+import { initializeOrm } from '@la.machine.a.idees/firestore-orm-rxjs';
 
-const app = initializeApp({
+initializeOrm({
   // Your Firebase config
+  apiKey: 'your-api-key',
+  authDomain: 'your-project.firebaseapp.com',
+  projectId: 'your-project',
+  storageBucket: 'your-project.appspot.com',
+  messagingSenderId: 'your-messaging-sender-id',
+  appId: 'your-app-id'
 });
 ```
 
