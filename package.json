@@ -30,7 +30,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "#eslint ."
+      "pre-commit": "eslint ."
     }
   },
   "prettier": {
