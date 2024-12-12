@@ -1,6 +1,6 @@
 import { getCollection } from '../index';
 import { AnyEntity } from '../entity';
-import { query, where, FieldPath } from 'firebase/firestore';
+import { query, where } from 'firebase/firestore';
 
 export class ReferenceToMultipleFromForeignArrayKey<
   ForeignEntity extends AnyEntity,
